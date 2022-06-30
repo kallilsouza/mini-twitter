@@ -26,6 +26,7 @@ SECRET_KEY = 'django-insecure-@$(9d6-y0d84#7p$qr&%bz6vj0ng9w$#)xtco6ymw2z6ns&y4o
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+DB = 'postgres'
 
 ALLOWED_HOSTS = []
 
@@ -78,10 +79,22 @@ WSGI_APPLICATION = 'mini_twitter.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+if DB == 'sqlite':
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
+else:
+    DATABASES = {
+    "default": {
+        "ENGINE": os.environ.get("SQL_ENGINE", "django.db.backends.sqlite3"),
+        "NAME": os.environ.get("SQL_DATABASE", os.path.join(BASE_DIR, "db.sqlite3")),
+        "USER": os.environ.get("SQL_USER", "microblog"),
+        "PASSWORD": os.environ.get("SQL_PASSWORD", "123456"),
+        "HOST": os.environ.get("SQL_HOST", "localhost"),
+        "PORT": os.environ.get("SQL_PORT", "5432"),
     }
 }
 
