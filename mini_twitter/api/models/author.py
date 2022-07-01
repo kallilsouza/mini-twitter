@@ -35,11 +35,3 @@ class Author(models.Model):
 
     def is_followed_by(self, author):
         return author in self.followers.all()
-
-@receiver(post_save, sender=User)
-def handle_new_user(sender, **kwargs):
-    user = kwargs['instance']
-    try:
-        author = user.author
-    except ObjectDoesNotExist:
-        author = Author.objects.create(user=user)
