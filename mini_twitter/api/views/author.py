@@ -16,15 +16,15 @@ class AuthorViewSet(viewsets.ModelViewSet):
     @action(methods=['POST'], name='Follow users', detail=True)    
     def follow(self, request, *args, **kwargs):
         author = get_object_or_404(Author, pk=kwargs['pk'])  
-        if not request.user.author in author.followers.all():
-            author.followers.add(request.user.author)
+        if author == self.author:
+            return HttpResponse(status=403)
+        author.add_to_followers(request.user.author)
         return HttpResponse(status=200)
 
     @action(methods=['POST'], name='Unfollow users', detail=True)    
     def unfollow(self, request, *args, **kwargs):
         author = get_object_or_404(Author, pk=kwargs['pk'])  
-        if request.user.author in author.followers.all():
-            author.followers.remove(request.user.author)
+        author.remove_from_followers(request.user.author)
         return HttpResponse(status=200)
 
     @authentication_classes([])
