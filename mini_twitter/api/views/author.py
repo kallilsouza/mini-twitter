@@ -16,7 +16,7 @@ class AuthorViewSet(viewsets.ModelViewSet):
     @action(methods=['POST'], name='Follow users', detail=True)    
     def follow(self, request, *args, **kwargs):
         author = get_object_or_404(Author, pk=kwargs['pk'])  
-        if author == self.author:
+        if author == self.request.user.author:
             return HttpResponse(status=403)
         author.add_to_followers(request.user.author)
         return HttpResponse(status=200)
