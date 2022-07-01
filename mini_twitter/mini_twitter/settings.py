@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-@$(9d6-y0d84#7p$qr&%bz6vj0ng9w$#)xtco6ymw2z6ns&y4o
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-DB = 'postgres'
+DB = 'sqlite'
 
 ALLOWED_HOSTS = []
 
@@ -111,7 +111,7 @@ REST_FRAMEWORK = {
 }
 
 SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=1),
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=15),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
     "ROTATE_REFRESH_TOKENS": False,
     "BLACKLIST_AFTER_ROTATION": True,
